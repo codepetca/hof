@@ -31,6 +31,10 @@ export default function RootLayout({
               >
                 GJ
               </a>
+              <div>
+                <p className="text-lg font-semibold">Game Jam Hall of Fame</p>
+                <p className="text-sm text-slate-300">10CS</p>
+              </div>
             </div>
           </header>
 
