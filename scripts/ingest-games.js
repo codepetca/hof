@@ -178,43 +178,21 @@ function makeHtmlShell(title) {
         font-family: "Space Grotesk", system-ui, sans-serif;
         overflow: hidden;
       }
-      body {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      #game, canvas {
+        width: 100vw;
+        height: 100vh;
       }
-      #game { position: relative; width: 100%; height: 100%; }
-      canvas { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #000; }
+      canvas {
+        display: block;
+        object-fit: contain;
+        background: #000;
+      }
     </style>
   </head>
   <body>
     <div id="game"></div>
     <script src="https://unpkg.com/chs-js-lib@latest/dist/chs.iife.js" type="text/javascript"></script>
     <script src="game.js" type="text/javascript"></script>
-    <script>
-      (function fitCanvas() {
-        var canvas = document.querySelector("canvas");
-        if (!canvas) return;
-        function resize() {
-          var w = canvas.width || canvas.offsetWidth || 800;
-          var h = canvas.height || canvas.offsetHeight || 600;
-          var vw = window.innerWidth;
-          var vh = window.innerHeight;
-          var targetW = vw;
-          var targetH = targetW * (h / w);
-          if (targetH > vh) {
-            targetH = vh;
-            targetW = targetH * (w / h);
-          }
-          canvas.style.width = targetW + "px";
-          canvas.style.height = targetH + "px";
-        }
-        resize();
-        var observer = new MutationObserver(resize);
-        observer.observe(document.body, { childList: true, subtree: true, attributes: true });
-        window.addEventListener("resize", resize);
-      })();
-    </script>
   </body>
 </html>
 `;
