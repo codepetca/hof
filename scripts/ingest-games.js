@@ -174,7 +174,7 @@ function makeHtmlShell(title) {
         padding: 0;
         width: 100%;
         height: 100%;
-        background: #020617;
+        background: #000;
         font-family: "Space Grotesk", system-ui, sans-serif;
         overflow: hidden;
       }
@@ -184,18 +184,21 @@ function makeHtmlShell(title) {
         justify-content: center;
       }
       #game {
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        position: relative;
+        width: 100%;
+        height: 100%;
       }
       canvas {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: min(100vw, calc(100vh * (4 / 3)));
+        height: min(100vh, calc(100vw * (3 / 4)));
         max-width: 100vw;
         max-height: 100vh;
-        width: auto;
-        height: auto;
         display: block;
+        background: #000;
       }
     </style>
   </head>
