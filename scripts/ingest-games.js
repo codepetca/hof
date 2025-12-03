@@ -36,6 +36,17 @@ function askOptional(question, fallback = "") {
   return rl.question(`${question}${suffix}: `).then((ans) => ans.trim());
 }
 
+function askTerm() {
+  return rl
+    .question("Term (winter/spring, enter to skip): ")
+    .then((ans) => {
+      const val = ans.trim().toLowerCase();
+      if (val === "w" || val === "win" || val === "winter") return "winter";
+      if (val === "s" || val === "spr" || val === "spring") return "spring";
+      return undefined;
+    });
+}
+
 function uniqueSlug(base, existing) {
   let candidate = base || "game";
   let n = 2;
@@ -243,8 +254,7 @@ async function processEntry(srcPath, { shouldDelete = false } = {}) {
   const title = await ask("Title", defaultTitle);
   const yearInput = await ask("Year", new Date().getFullYear().toString());
   const year = parseInt(yearInput, 10) || new Date().getFullYear();
-  const termInput = await askOptional("Term (fall/spring)", "");
-  const term = termInput ? termInput.toLowerCase() : undefined;
+  const term = await askTerm();
 
   const games = loadGames();
   const existingSlugs = new Set(games.map((g) => g.slug));
