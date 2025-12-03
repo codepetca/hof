@@ -178,13 +178,15 @@ function makeHtmlShell(title) {
         font-family: "Space Grotesk", system-ui, sans-serif;
         overflow: hidden;
       }
-      body {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      #game, canvas {
+        width: 100vw;
+        height: 100vh;
+        display: block;
       }
-      #game { position: relative; width: 100%; height: 100%; }
-      canvas { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #000; }
+      canvas {
+        object-fit: contain;
+        background: #000;
+      }
     </style>
   </head>
   <body>
@@ -204,16 +206,7 @@ function makeHtmlShell(title) {
             canvas.width = w;
             canvas.height = h;
           }
-          var vw = window.innerWidth;
-          var vh = window.innerHeight;
-          var targetW = vw;
-          var targetH = targetW * (h / w);
-          if (targetH > vh) {
-            targetH = vh;
-            targetW = targetH * (w / h);
-          }
-          canvas.style.width = targetW + "px";
-          canvas.style.height = targetH + "px";
+          // Canvas styling uses object-fit to contain, so just ensure it exists.
         }
         resize();
         var observer = new MutationObserver(resize);
