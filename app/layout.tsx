@@ -31,11 +31,12 @@ export default function RootLayout({
               >
                 GJ
               </a>
-              <div>
+              <div className="flex items-center gap-3 text-white">
                 <p className="text-lg font-semibold">Game Jam Hall of Fame</p>
                 <p className="text-sm text-slate-300">10CS</p>
               </div>
             </div>
+            <div id="year-filter-slot" className="flex items-center gap-2" />
           </header>
 
           <main className="flex-1">{children}</main>
