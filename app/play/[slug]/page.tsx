@@ -42,26 +42,22 @@ export default async function PlayPage({ params }: Props) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950 text-slate-100 flex flex-col">
-      <div className="absolute top-4 left-4">
+    <div className="fixed inset-0 z-50 bg-slate-950 text-slate-100">
+      <div className="absolute top-3 left-3 z-10">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 bg-slate-800/80 border border-slate-700 text-slate-100 hover:border-slate-600"
+          className="inline-flex items-center gap-2 rounded-xl px-3 py-2 bg-slate-800/80 border border-slate-700 text-slate-100 hover:border-slate-600"
         >
           {"←"} Back
         </Link>
       </div>
 
-      <div className="w-full h-full flex items-center justify-center p-2 sm:p-6">
-        <div className="w-full h-full flex items-center justify-center">
-          <iframe
-            src={game.gameUrl}
-            className="w-full h-full rounded-2xl border border-slate-800 shadow-2xl shadow-slate-950/60 bg-slate-900"
-            allowFullScreen
-            title={game.title}
-          />
-        </div>
-      </div>
+      <iframe
+        src={game.gameUrl}
+        className="w-full h-full border-0"
+        allowFullScreen
+        title={game.title}
+      />
     </div>
   );
 }
