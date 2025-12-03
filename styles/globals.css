@@ -30,7 +30,7 @@ a:hover {
 }
 
 .main-shell {
-  @apply min-h-screen flex flex-col px-6 sm:px-10 lg:px-16 py-10 gap-10;
+  @apply min-h-screen flex flex-col px-6 sm:px-10 lg:px-16 py-6 gap-6;
 }
 
 .surface-card {

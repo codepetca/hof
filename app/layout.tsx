@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${spaceGrotesk.variable} antialiased text-slate-100 bg-slate-950`}>
         <div className="main-shell">
-          <header className="flex items-center justify-between gap-4">
+          <header className="flex items-center justify-between gap-3 py-2">
             <div className="flex items-center gap-3">
               <a
                 href="/"
