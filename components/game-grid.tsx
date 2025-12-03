@@ -10,8 +10,8 @@ export default function GameGrid({ games }: Props) {
   const sorted = [...games].sort((a, b) => (b.year === a.year ? a.title.localeCompare(b.title) : b.year - a.year));
 
   return (
-    <section id="games" className="space-y-6">
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+    <section id="games" className="space-y-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         {sorted.map((game) => (
           <Link
             key={game.slug}
@@ -30,9 +30,9 @@ export default function GameGrid({ games }: Props) {
                 />
               </div>
 
-              <div className="px-4 py-3 flex items-center gap-3 flex-wrap">
-                <p className="text-lg font-semibold text-white leading-tight">{game.title}</p>
-                <div className="flex flex-wrap gap-2">
+              <div className="px-3 py-2 flex items-center gap-2 flex-wrap">
+                <p className="text-base font-semibold text-white leading-tight">{game.title}</p>
+                <div className="flex flex-wrap gap-2 ml-auto justify-end">
                   {[...(game.tags ?? []), String(game.year)].map((tag) => (
                     <span key={tag} className="tag-pill">
                       {tag}

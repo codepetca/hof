@@ -14,8 +14,8 @@ export default function HomePage() {
   );
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-end">
+    <div className="space-y-4 relative">
+      <div className="flex items-center justify-end pt-1">
         <select
           id="year-select"
           className="rounded-xl bg-slate-900/80 border border-slate-700 text-slate-100 px-3 py-2"
