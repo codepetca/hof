@@ -34,8 +34,14 @@
         var canvas = document.querySelector("canvas");
         if (!canvas) return;
         function resize() {
-          var w = canvas.width || canvas.offsetWidth || 800;
-          var h = canvas.height || canvas.offsetHeight || 600;
+          var w = canvas.width || canvas.offsetWidth || 0;
+          var h = canvas.height || canvas.offsetHeight || 0;
+          if (!w || !h || (w === 300 && h === 150)) {
+            w = 400;
+            h = 500;
+            canvas.width = w;
+            canvas.height = h;
+          }
           var vw = window.innerWidth;
           var vh = window.innerHeight;
           var targetW = vw;
