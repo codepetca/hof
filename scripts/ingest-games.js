@@ -86,6 +86,35 @@ function saveGames(games) {
   fs.writeFileSync(gamesJsonPath, `${JSON.stringify(games, null, 2)}\n`);
 }
 
+async function captureSnapshot(destDir, slug, title) {
+  let chromium;
+  try {
+    // Lazy load so ingest still works if Playwright isn't installed
+    ({ chromium } = require("playwright"));
+  } catch (err) {
+    console.warn("⚠️  Playwright not available; skipping auto-snapshot.");
+    return false;
+  }
+
+  const outPath = path.join(destDir, "snapshot.png");
+  const fileUrl = `file://${path.join(destDir, "index.html")}`;
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+  try {
+    await page.goto(fileUrl, { waitUntil: "networkidle" });
+    await page.waitForTimeout(2000);
+    await fs.promises.mkdir(path.dirname(outPath), { recursive: true });
+    await page.screenshot({ path: outPath, fullPage: true });
+    console.log(`📸 Captured snapshot for ${slug} (${title})`);
+    return true;
+  } catch (err) {
+    console.warn(`⚠️  Snapshot capture failed for ${slug}: ${err.message}`);
+    return false;
+  } finally {
+    await browser.close();
+  }
+}
+
 function makeHtmlShell(title) {
   return `<!DOCTYPE html>
 <html lang="en">
@@ -194,9 +223,14 @@ async function processEntry(srcPath, { shouldDelete = false } = {}) {
   }
 
   const snapshotFile = findSnapshotFile(destDir);
-  const snapshot = snapshotFile ? `/games/${slug}/${snapshotFile}` : placeholderSnapshot;
+  let snapshot = snapshotFile ? `/games/${slug}/${snapshotFile}` : placeholderSnapshot;
   if (!snapshotFile) {
-    console.warn("⚠️  No snapshot found; using shared placeholder.");
+    const captured = await captureSnapshot(destDir, slug, title);
+    if (captured) {
+      snapshot = `/games/${slug}/snapshot.png`;
+    } else {
+      console.warn("⚠️  No snapshot found; using shared placeholder.");
+    }
   }
 
   const tagsInput = await ask("Tags (comma separated)", "");
