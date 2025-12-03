@@ -199,8 +199,6 @@ async function processEntry(srcPath, { shouldDelete = false } = {}) {
     console.warn("⚠️  No snapshot found; using shared placeholder.");
   }
 
-  const teamName = await ask("Team name", "Unknown team");
-  const description = await ask("Short description", "");
   const tagsInput = await ask("Tags (comma separated)", "");
   const tags = tagsInput
     ? tagsInput
@@ -214,9 +212,9 @@ async function processEntry(srcPath, { shouldDelete = false } = {}) {
   gamesList.push({
     slug,
     title,
-    teamName,
     year,
-    description: description || "Student CodeHS JS Graphics game.",
+    teamName: "Unknown team",
+    description: "Student CodeHS JS Graphics game.",
     snapshot,
     gameUrl: `/games/${slug}/index.html`,
     ...(term ? { tags: [term, ...(tags || [])] } : {}),
