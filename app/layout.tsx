@@ -24,13 +24,13 @@ export default function RootLayout({
         <div className="main-shell">
           <header className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-indigo-500 to-sky-400 shadow-glow grid place-items-center text-lg font-black text-slate-950">
-                H
-              </div>
-              <div>
-                <p className="text-lg font-semibold">GameJam Hall of Fame</p>
-                <p className="text-sm text-slate-300">Grade 10 Computer Science</p>
-              </div>
+              <a
+                href="/"
+                className="h-11 w-11 rounded-2xl bg-gradient-to-br from-indigo-500 to-sky-400 shadow-glow grid place-items-center text-lg font-black text-slate-950"
+                aria-label="GameJam home"
+              >
+                GJ
+              </a>
             </div>
           </header>
 
