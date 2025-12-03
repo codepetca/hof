@@ -32,8 +32,8 @@ export default function RootLayout({
                 GJ
               </a>
               <div className="flex items-center gap-3 text-white">
-                <p className="text-lg font-semibold">Game Jam Hall of Fame</p>
-                <p className="text-sm text-slate-300">10CS</p>
+                <p className="text-2xl sm:text-3xl font-semibold leading-none">Game Jam Hall of Fame</p>
+                <p className="text-lg text-slate-300 leading-none">10CS</p>
               </div>
             </div>
             <div id="year-filter-slot" className="flex items-center gap-2" />
@@ -42,7 +42,7 @@ export default function RootLayout({
           <main className="flex-1">{children}</main>
 
           <footer className="border-t border-slate-800/70 pt-6 text-sm text-slate-400">
-            &copy; GameJam Hall of Fame - Built for student-created CodeHS JS Graphics games.
+            Built for student-created CodeHS JS Graphics games in Mr Chan&apos;s Class.
           </footer>
         </div>
       </body>
