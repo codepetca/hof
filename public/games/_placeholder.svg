@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Game snapshot placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0b1224"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect x="28" y="28" width="744" height="544" rx="24" ry="24" fill="#0b132a" stroke="#1f2937" stroke-width="3"/>
+  <rect x="46" y="46" width="708" height="508" rx="18" ry="18" fill="#0f172a" stroke="#1f2937" stroke-width="2"/>
+  <path d="M80 480 H720" stroke="#1e293b" stroke-width="2" stroke-dasharray="6 10" opacity="0.7"/>
+  <path d="M80 160 H720" stroke="#1e293b" stroke-width="2" stroke-dasharray="6 10" opacity="0.7"/>
+  <circle cx="180" cy="320" r="54" fill="none" stroke="url(#accent)" stroke-width="5" opacity="0.8"/>
+  <circle cx="360" cy="260" r="34" fill="none" stroke="#22d3ee" stroke-width="4" opacity="0.7"/>
+  <circle cx="520" cy="360" r="42" fill="none" stroke="#a855f7" stroke-width="4" opacity="0.7"/>
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="32" font-weight="700" letter-spacing="1">Game Snapshot</text>
+  <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#94a3b8" font-family="Arial, sans-serif" font-size="16" letter-spacing="0.5">Upload a snapshot.png to replace this</text>
+</svg>

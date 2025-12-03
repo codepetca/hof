@@ -1,0 +1,56 @@
+[
+  {
+    "slug": "2025-click-the-rat",
+    "title": "Click the Rat",
+    "teamName": "C",
+    "year": 2025,
+    "description": "Student CodeHS JS Graphics game.",
+    "snapshot": "/games/_placeholder.svg",
+    "gameUrl": "/games/2025-click-the-rat/index.html",
+    "tags": [
+      "spring"
+    ]
+  },
+  {
+    "slug": "space-dodger",
+    "title": "Space Dodger",
+    "teamName": "Team Rocket",
+    "year": 2025,
+    "description": "A fast-paced dodging game built in CodeHS JS Graphics.",
+    "snapshot": "/games/space-dodger/snapshot.png",
+    "gameUrl": "/games/space-dodger/index.html",
+    "tags": [
+      "2025",
+      "winner",
+      "arcade"
+    ]
+  },
+  {
+    "slug": "neon-racers",
+    "title": "Neon Racers",
+    "teamName": "Pixel Dash",
+    "year": 2024,
+    "description": "Synthwave hover racers weaving through traffic while scooping up energy orbs.",
+    "snapshot": "/games/neon-racers/snapshot.png",
+    "gameUrl": "/games/neon-racers/index.html",
+    "tags": [
+      "2024",
+      "speedrun",
+      "neon"
+    ]
+  },
+  {
+    "slug": "gravity-well",
+    "title": "Gravity Well",
+    "teamName": "Orbital Minds",
+    "year": 2023,
+    "description": "Slingshot satellites through a maze of asteroids and planetary pull.",
+    "snapshot": "/games/gravity-well/snapshot.png",
+    "gameUrl": "/games/gravity-well/index.html",
+    "tags": [
+      "2023",
+      "physics",
+      "puzzle"
+    ]
+  }
+]

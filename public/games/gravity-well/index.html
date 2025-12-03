@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gravity Well</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      body {
+        margin: 0;
+        padding: 24px;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: radial-gradient(circle at 30% 20%, rgba(14, 165, 233, 0.2), transparent 36%),
+          radial-gradient(circle at 70% 0%, rgba(250, 204, 21, 0.2), transparent 28%),
+          #0c101a;
+        font-family: "Space Grotesk", system-ui, sans-serif;
+        color: #e2e8f0;
+      }
+      .frame {
+        width: min(960px, 100%);
+        border-radius: 18px;
+        padding: 18px;
+        background: rgba(8, 11, 20, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 20px 80px rgba(0, 0, 0, 0.55);
+      }
+      h1 {
+        margin: 0 0 6px;
+        font-size: 24px;
+      }
+      p {
+        margin: 0 0 12px;
+        color: #cbd5e1;
+      }
+      canvas {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 16px;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame">
+      <h1>Gravity Well</h1>
+      <p>Slingshot satellites and avoid asteroids. Click to launch.</p>
+      <div id="game"></div>
+    </div>
+
+    <script src="https://unpkg.com/chs-js-lib@latest/dist/chs.iife.js" type="text/javascript"></script>
+    <script src="game.js" type="text/javascript"></script>
+  </body>
+</html>
