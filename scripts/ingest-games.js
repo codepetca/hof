@@ -86,6 +86,50 @@ function saveGames(games) {
   fs.writeFileSync(gamesJsonPath, `${JSON.stringify(games, null, 2)}\n`);
 }
 
+function escapeForSvg(text) {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+function createTitlePlaceholder(destDir, slug, title, year) {
+  const safeTitle = escapeForSvg(title || "Student Game");
+  const safeSubtitle = year ? `${year}` : "GameJam Hall of Fame";
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="${safeTitle}">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0b1224"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect x="30" y="30" width="740" height="540" rx="28" ry="28" fill="#0b132a" stroke="#1f2937" stroke-width="3"/>
+  <rect x="48" y="48" width="704" height="504" rx="22" ry="22" fill="#0f172a" stroke="#1f2937" stroke-width="2"/>
+  <path d="M70 140 H730" stroke="#1e293b" stroke-width="2" stroke-dasharray="6 10" opacity="0.6"/>
+  <path d="M70 460 H730" stroke="#1e293b" stroke-width="2" stroke-dasharray="6 10" opacity="0.6"/>
+  <text x="50%" y="52%" dominant-baseline="middle" text-anchor="middle" fill="#e2e8f0" font-family="Space Grotesk, 'Inter', system-ui, sans-serif" font-size="40" font-weight="700" letter-spacing="0.5">${safeTitle}</text>
+  <text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" fill="#94a3b8" font-family="Space Grotesk, 'Inter', system-ui, sans-serif" font-size="18" letter-spacing="1">${escapeForSvg(
+    safeSubtitle
+  )}</text>
+  <circle cx="180" cy="300" r="54" fill="none" stroke="url(#accent)" stroke-width="5" opacity="0.8"/>
+  <circle cx="400" cy="240" r="34" fill="none" stroke="#22d3ee" stroke-width="4" opacity="0.7"/>
+  <circle cx="560" cy="360" r="42" fill="none" stroke="#a855f7" stroke-width="4" opacity="0.7"/>
+</svg>`;
+
+  const outPath = path.join(destDir, "snapshot.svg");
+  fs.writeFileSync(outPath, svg, "utf8");
+  console.log(`🖼️  Created title placeholder for ${slug}`);
+  return true;
+}
+
 async function captureSnapshot(destDir, slug, title) {
   let chromium;
   try {
@@ -229,7 +273,12 @@ async function processEntry(srcPath, { shouldDelete = false } = {}) {
     if (captured) {
       snapshot = `/games/${slug}/snapshot.png`;
     } else {
-      console.warn("⚠️  No snapshot found; using shared placeholder.");
+      const generated = createTitlePlaceholder(destDir, slug, title, year);
+      if (generated) {
+        snapshot = `/games/${slug}/snapshot.svg`;
+      } else {
+        console.warn("⚠️  No snapshot found; using shared placeholder.");
+      }
     }
   }
 
@@ -242,6 +291,7 @@ async function processEntry(srcPath, { shouldDelete = false } = {}) {
     : [];
 
   const gamesList = loadGames();
+  const combinedTags = term ? [term, ...tags] : tags;
 
   gamesList.push({
     slug,
@@ -251,8 +301,7 @@ async function processEntry(srcPath, { shouldDelete = false } = {}) {
     description: "Student CodeHS JS Graphics game.",
     snapshot,
     gameUrl: `/games/${slug}/index.html`,
-    ...(term ? { tags: [term, ...(tags || [])] } : {}),
-    ...(tags.length ? { tags } : {})
+    ...(combinedTags.length ? { tags: combinedTags } : {})
   });
 
   gamesList.sort((a, b) => (b.year === a.year ? a.title.localeCompare(b.title) : b.year - a.year));
