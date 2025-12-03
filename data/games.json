@@ -12,6 +12,18 @@
     ]
   },
   {
+    "slug": "2025-click-the-rat-2",
+    "title": "Click the Rat",
+    "year": 2025,
+    "teamName": "Unknown team",
+    "description": "Student CodeHS JS Graphics game.",
+    "snapshot": "/games/2025-click-the-rat-2/snapshot.png",
+    "gameUrl": "/games/2025-click-the-rat-2/index.html",
+    "tags": [
+      "spring"
+    ]
+  },
+  {
     "slug": "space-dodger",
     "title": "Space Dodger",
     "teamName": "Team Rocket",

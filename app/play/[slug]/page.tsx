@@ -5,6 +5,7 @@ import { games } from "@/lib/games";
 
 type Props = {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
 export function generateStaticParams() {
@@ -33,12 +34,46 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function PlayPage({ params }: Props) {
+export default async function PlayPage({ params, searchParams }: Props) {
   const { slug } = await params;
+  const search = await searchParams;
+  const modeParam = search.mode;
+  const mode = Array.isArray(modeParam) ? modeParam[0] : modeParam;
+  const isImmersive = (mode || "").toLowerCase() === "immersive";
+
   const game = games.find((entry) => entry.slug === slug);
 
   if (!game) {
     return notFound();
+  }
+
+  if (isImmersive) {
+    return (
+      <div className="fixed inset-0 z-50 bg-slate-950 text-slate-100">
+        <div className="absolute top-4 left-4 flex flex-wrap gap-3">
+          <Link
+            href={`/play/${slug}`}
+            className="inline-flex items-center gap-2 rounded-xl px-4 py-2 bg-slate-800/80 border border-slate-700 text-slate-100"
+          >
+            {"←"} Exit immersive
+          </Link>
+          <Link href={game.gameUrl} target="_blank" rel="noreferrer" className="button-primary">
+            Open in new tab
+          </Link>
+        </div>
+
+        <div className="w-full h-full flex items-center justify-center p-4 sm:p-8">
+          <div className="w-full max-w-6xl aspect-[4/3]">
+            <iframe
+              src={game.gameUrl}
+              className="w-full h-full rounded-2xl border border-slate-800 shadow-2xl shadow-slate-950/60 bg-slate-900"
+              allowFullScreen
+              title={game.title}
+            />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -55,9 +90,14 @@ export default async function PlayPage({ params }: Props) {
             <h1 className="text-3xl font-semibold text-white">{game.title}</h1>
             <p className="text-slate-300">By {game.teamName}</p>
           </div>
-          <Link href={game.gameUrl} className="button-primary" target="_blank" rel="noreferrer">
-            Open in new tab
-          </Link>
+          <div className="flex flex-wrap gap-2">
+            <Link href={`/play/${slug}?mode=immersive`} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-100 hover:border-slate-600">
+              Immersive mode
+            </Link>
+            <Link href={game.gameUrl} className="button-primary" target="_blank" rel="noreferrer">
+              Open in new tab
+            </Link>
+          </div>
         </div>
         <p className="text-slate-300 leading-relaxed">{game.description}</p>
         {game.tags && (
@@ -76,15 +116,14 @@ export default async function PlayPage({ params }: Props) {
           <p>
             Game iframe - served from <code>{game.gameUrl}</code>
           </p>
-          <span className="tag-pill">800 x 600</span>
+          <span className="tag-pill">Immersive available</span>
         </div>
-        <div className="p-3 bg-slate-950/70 rounded-b-2xl overflow-auto">
+        <div className="p-3 bg-slate-950/70 rounded-b-2xl">
           <div className="w-full flex justify-center">
             <iframe
               src={game.gameUrl}
-              width={800}
-              height={600}
-              className="rounded-xl border border-slate-800 shadow-2xl shadow-slate-950/60"
+              className="w-full max-w-5xl aspect-[4/3] rounded-2xl border border-slate-800 shadow-2xl shadow-slate-950/60 bg-slate-900"
+              allowFullScreen
               title={game.title}
             />
           </div>
