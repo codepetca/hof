@@ -32,16 +32,6 @@ export default function RootLayout({
                 <p className="text-sm text-slate-300">Grade 10 Computer Science</p>
               </div>
             </div>
-            <nav className="flex items-center gap-3 text-sm text-slate-300">
-              <a className="hover:text-white transition" href="/">Home</a>
-              <a className="hover:text-white transition" href="#games">Games</a>
-              <a
-                className="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-900/70 border border-slate-800 text-slate-100 hover:border-slate-700"
-                href="https://codehs.com" target="_blank" rel="noreferrer"
-              >
-                CodeHS
-              </a>
-            </nav>
           </header>
 
           <main className="flex-1">{children}</main>
