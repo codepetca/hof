@@ -86,6 +86,13 @@ function saveGames(games) {
   fs.writeFileSync(gamesJsonPath, `${JSON.stringify(games, null, 2)}\n`);
 }
 
+function ensureSetSize(content) {
+  if (/setSize\s*\(/.test(content)) {
+    return content;
+  }
+  return `setSize(400, 480);\n${content}`;
+}
+
 function escapeForSvg(text) {
   return text
     .replace(/&/g, "&amp;")
@@ -262,7 +269,9 @@ async function processEntry(srcPath, { shouldDelete = false } = {}) {
     copyDir(srcPath, destDir);
   } else if (isJs) {
     ensureDir(destDir);
-    fs.copyFileSync(srcPath, path.join(destDir, "game.js"));
+    const raw = fs.readFileSync(srcPath, "utf8");
+    const withSetSize = ensureSetSize(raw);
+    fs.writeFileSync(path.join(destDir, "game.js"), withSetSize, "utf8");
     fs.writeFileSync(path.join(destDir, "index.html"), makeHtmlShell(title));
   } else {
     console.warn(`Skipping unsupported file: ${srcPath}`);
