@@ -197,11 +197,13 @@ function makeHtmlShell(title) {
         overflow: hidden;
       }
       #game { width: 100%; height: 100%; }
-      canvas { background: #000; }
+      canvas { width: 100%; height: 100%; display: block; background: #000; }
     </style>
   </head>
   <body>
-    <div id="game"></div>
+    <div id="game">
+      <canvas id="canvas" width="400" height="480"></canvas>
+    </div>
     <script src="https://unpkg.com/chs-js-lib@latest/dist/chs.iife.js" type="text/javascript"></script>
     <script src="game.js" type="text/javascript"></script>
   </body>
