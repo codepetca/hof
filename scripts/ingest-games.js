@@ -164,7 +164,18 @@ async function captureSnapshot(destDir, slug, title) {
   try {
     await page.goto(fileUrl, { waitUntil: "domcontentloaded", timeout: 3000 });
     await page.waitForSelector("canvas", { timeout: 5000 });
-    await page.waitForTimeout(1500);
+    // Wait until something has drawn to the canvas (alpha > 0) or timeout.
+    await page
+      .waitForFunction(() => {
+        const c = document.querySelector("canvas");
+        if (!c) return false;
+        const ctx = c.getContext("2d");
+        if (!ctx) return false;
+        const pixel = ctx.getImageData(0, 0, 1, 1).data;
+        return pixel[3] !== 0;
+      }, { timeout: 6000 })
+      .catch(() => {});
+    await page.waitForTimeout(1000);
     await fs.promises.mkdir(path.dirname(outPath), { recursive: true });
     const target = page.locator("#game").first();
     await target.screenshot({ path: outPath });
