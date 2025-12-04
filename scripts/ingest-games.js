@@ -151,11 +151,10 @@ function createTitlePlaceholder(destDir, slug, title, year) {
 async function captureSnapshot(destDir, slug, title) {
   let chromium;
   try {
-    // Lazy load so ingest still works if Playwright isn't installed
     ({ chromium } = require("playwright"));
   } catch (err) {
     console.warn("⚠️  Playwright not available; skipping auto-snapshot.");
-    return false;
+    return null;
   }
 
   const outPath = path.join(destDir, "snapshot.png");
@@ -163,16 +162,17 @@ async function captureSnapshot(destDir, slug, title) {
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   try {
-    page.setDefaultNavigationTimeout(3000);
-    await page.goto(fileUrl, { waitUntil: "networkidle", timeout: 3000 });
-    await page.waitForTimeout(1000);
+    await page.goto(fileUrl, { waitUntil: "domcontentloaded", timeout: 3000 });
+    await page.waitForSelector("canvas", { timeout: 2000 });
+    await page.waitForTimeout(500);
     await fs.promises.mkdir(path.dirname(outPath), { recursive: true });
-    await page.screenshot({ path: outPath, fullPage: true });
+    const target = page.locator("#game").first();
+    await target.screenshot({ path: outPath });
     console.log(`📸 Captured snapshot for ${slug} (${title})`);
-    return true;
+    return `/games/${slug}/snapshot.png`;
   } catch (err) {
     console.warn(`⚠️  Snapshot capture failed for ${slug}: ${err.message}`);
-    return false;
+    return null;
   } finally {
     await browser.close();
   }
@@ -277,11 +277,8 @@ async function processEntry(srcPath, { shouldDelete = false } = {}) {
     return false;
   }
 
-  let snapshot = placeholderSnapshot;
-  const captured = await captureSnapshot(destDir, slug, title);
-  if (captured) {
-    snapshot = `/games/${slug}/snapshot.png`;
-  }
+  const capturedPath = await captureSnapshot(destDir, slug, title);
+  const snapshot = capturedPath ?? placeholderSnapshot;
 
   const gamesList = loadGames();
   const combinedTags = term ? [term] : [];
