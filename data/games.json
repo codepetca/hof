@@ -5,8 +5,20 @@
     "year": 2023,
     "teamName": "Unknown team",
     "description": "Student CodeHS JS Graphics game.",
-    "snapshot": "/games/_placeholder.svg",
+    "snapshot": "/games/2023-flying-duck/snapshot.svg",
     "gameUrl": "/games/2023-flying-duck/index.html",
+    "tags": [
+      "winter"
+    ]
+  },
+  {
+    "slug": "2023-spikes",
+    "title": "Spikes",
+    "year": 2023,
+    "teamName": "Unknown team",
+    "description": "Student CodeHS JS Graphics game.",
+    "snapshot": "/games/2023-spikes/snapshot.svg",
+    "gameUrl": "/games/2023-spikes/index.html",
     "tags": [
       "winter"
     ]
