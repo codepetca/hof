@@ -205,6 +205,13 @@ function makeHtmlShell(title) {
     </div>
     <script src="https://unpkg.com/chs-js-lib@latest/dist/chs.iife.js" type="text/javascript"></script>
     <script src="game.js" type="text/javascript"></script>
+    <script>
+      window.addEventListener("load", function () {
+        if (typeof window.start === "function") {
+          try { window.start(); } catch (err) { console.error("Game start error:", err); }
+        }
+      });
+    </script>
   </body>
 </html>
 `;
