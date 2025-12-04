@@ -163,8 +163,8 @@ async function captureSnapshot(destDir, slug, title) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   try {
     await page.goto(fileUrl, { waitUntil: "domcontentloaded", timeout: 3000 });
-    await page.waitForSelector("canvas", { timeout: 2000 });
-    await page.waitForTimeout(500);
+    await page.waitForSelector("canvas", { timeout: 5000 });
+    await page.waitForTimeout(1500);
     await fs.promises.mkdir(path.dirname(outPath), { recursive: true });
     const target = page.locator("#game").first();
     await target.screenshot({ path: outPath });
