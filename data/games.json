@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "slug": "2023-flying-duck",
+    "title": "Flying Duck",
+    "year": 2023,
+    "teamName": "Unknown team",
+    "description": "Student CodeHS JS Graphics game.",
+    "snapshot": "/games/_placeholder.svg",
+    "gameUrl": "/games/2023-flying-duck/index.html",
+    "tags": [
+      "winter"
+    ]
+  }
+]

@@ -196,8 +196,18 @@ function makeHtmlShell(title) {
         font-family: "Space Grotesk", system-ui, sans-serif;
         overflow: hidden;
       }
-      #game { width: 100%; height: 100%; }
-      canvas { width: 100%; height: 100%; display: block; background: #000; }
+      #game {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+      }
+      canvas {
+        display: block;
+        background: #000;
+      }
     </style>
   </head>
   <body>
