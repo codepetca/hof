@@ -9,7 +9,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "GameJam Hall of Fame",
+  title: "Game Jam Winners",
   description: "Grade 10 Computer Science - Play CodeHS Graphics GameJam winners and favorites."
 };
 
@@ -32,7 +32,7 @@ export default function RootLayout({
                 GJ
               </a>
               <div className="flex items-center gap-3 text-white">
-                <p className="text-2xl sm:text-3xl font-semibold leading-none">Game Jam Hall of Fame</p>
+                <p className="text-2xl sm:text-3xl font-semibold leading-none">Game Jam Winners</p>
                 <p className="text-lg text-slate-300 leading-none">10CS</p>
               </div>
             </div>
