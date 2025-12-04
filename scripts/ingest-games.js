@@ -163,8 +163,9 @@ async function captureSnapshot(destDir, slug, title) {
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   try {
-    await page.goto(fileUrl, { waitUntil: "networkidle" });
-    await page.waitForTimeout(2000);
+    page.setDefaultNavigationTimeout(3000);
+    await page.goto(fileUrl, { waitUntil: "networkidle", timeout: 3000 });
+    await page.waitForTimeout(1000);
     await fs.promises.mkdir(path.dirname(outPath), { recursive: true });
     await page.screenshot({ path: outPath, fullPage: true });
     console.log(`📸 Captured snapshot for ${slug} (${title})`);
@@ -276,7 +277,11 @@ async function processEntry(srcPath, { shouldDelete = false } = {}) {
     return false;
   }
 
-  const snapshot = placeholderSnapshot;
+  let snapshot = placeholderSnapshot;
+  const captured = await captureSnapshot(destDir, slug, title);
+  if (captured) {
+    snapshot = `/games/${slug}/snapshot.png`;
+  }
 
   const gamesList = loadGames();
   const combinedTags = term ? [term] : [];
