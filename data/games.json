@@ -1,22 +1,26 @@
 [
   {
-    "slug": "2025-click-the-rat",
-    "title": "Click the Rat",
-    "year": 2025,
+    "slug": "2023-flying-duck",
+    "title": "Flying Duck",
+    "year": 2023,
     "teamName": "Unknown team",
     "description": "Student CodeHS JS Graphics game.",
-    "snapshot": "/games/2025-click-the-rat/snapshot.png",
-    "gameUrl": "/games/2025-click-the-rat/index.html",
-    "tags": ["spring"]
+    "snapshot": "/games/2023-flying-duck/snapshot.png",
+    "gameUrl": "/games/2023-flying-duck/index.html",
+    "tags": [
+      "winter"
+    ]
   },
   {
-    "slug": "2024-flying-duck",
-    "title": "Flying Duck",
-    "year": 2024,
+    "slug": "2023-spikes",
+    "title": "Spikes",
+    "year": 2023,
     "teamName": "Unknown team",
     "description": "Student CodeHS JS Graphics game.",
-    "snapshot": "/games/2024-flying-duck/snapshot.png",
-    "gameUrl": "/games/2024-flying-duck/index.html",
-    "tags": ["spring"]
+    "snapshot": "/games/2023-spikes/snapshot.png",
+    "gameUrl": "/games/2023-spikes/index.html",
+    "tags": [
+      "winter"
+    ]
   }
 ]

@@ -196,13 +196,8 @@ function makeHtmlShell(title) {
         font-family: "Space Grotesk", system-ui, sans-serif;
         overflow: hidden;
       }
-      body {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      #game { position: relative; width: 100%; height: 100%; }
-      canvas { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #000; }
+      #game { display: flex; align-items: center; justify-content: center; padding: 8px; width: 100%; height: 100%; }
+      canvas { display: block; background: #000; }
     </style>
   </head>
   <body>
@@ -218,20 +213,12 @@ function makeHtmlShell(title) {
           var h = canvas.height || canvas.offsetHeight || 0;
           if (!w || !h || (w === 300 && h === 150)) {
             w = 400;
-            h = 500;
+            h = 480;
             canvas.width = w;
             canvas.height = h;
           }
-          var vw = window.innerWidth;
-          var vh = window.innerHeight;
-          var targetW = vw;
-          var targetH = targetW * (h / w);
-          if (targetH > vh) {
-            targetH = vh;
-            targetW = targetH * (w / h);
-          }
-          canvas.style.width = targetW + "px";
-          canvas.style.height = targetH + "px";
+          canvas.style.width = w + "px";
+          canvas.style.height = h + "px";
         }
         resize();
         var observer = new MutationObserver(resize);
