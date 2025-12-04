@@ -196,36 +196,14 @@ function makeHtmlShell(title) {
         font-family: "Space Grotesk", system-ui, sans-serif;
         overflow: hidden;
       }
-      #game { display: flex; align-items: center; justify-content: center; padding: 8px; width: 100%; height: 100%; }
-      canvas { display: block; background: #000; }
+      #game { width: 100%; height: 100%; }
+      canvas { background: #000; }
     </style>
   </head>
   <body>
     <div id="game"></div>
     <script src="https://unpkg.com/chs-js-lib@latest/dist/chs.iife.js" type="text/javascript"></script>
     <script src="game.js" type="text/javascript"></script>
-    <script>
-      (function fitCanvas() {
-        var canvas = document.querySelector("canvas");
-        if (!canvas) return;
-        function resize() {
-          var w = canvas.width || canvas.offsetWidth || 0;
-          var h = canvas.height || canvas.offsetHeight || 0;
-          if (!w || !h || (w === 300 && h === 150)) {
-            w = 400;
-            h = 480;
-            canvas.width = w;
-            canvas.height = h;
-          }
-          canvas.style.width = w + "px";
-          canvas.style.height = h + "px";
-        }
-        resize();
-        var observer = new MutationObserver(resize);
-        observer.observe(document.body, { childList: true, subtree: true, attributes: true });
-        window.addEventListener("resize", resize);
-      })();
-    </script>
   </body>
 </html>
 `;
@@ -286,32 +264,10 @@ async function processEntry(srcPath, { shouldDelete = false } = {}) {
     return false;
   }
 
-  const snapshotFile = findSnapshotFile(destDir);
-  let snapshot = snapshotFile ? `/games/${slug}/${snapshotFile}` : placeholderSnapshot;
-  if (!snapshotFile) {
-    const captured = await captureSnapshot(destDir, slug, title);
-    if (captured) {
-      snapshot = `/games/${slug}/snapshot.png`;
-    } else {
-      const generated = createTitlePlaceholder(destDir, slug, title, year);
-      if (generated) {
-        snapshot = `/games/${slug}/snapshot.svg`;
-      } else {
-        console.warn("⚠️  No snapshot found; using shared placeholder.");
-      }
-    }
-  }
-
-  const tagsInput = await ask("Tags (comma separated)", "");
-  const tags = tagsInput
-    ? tagsInput
-        .split(",")
-        .map((tag) => tag.trim())
-        .filter(Boolean)
-    : [];
+  const snapshot = placeholderSnapshot;
 
   const gamesList = loadGames();
-  const combinedTags = term ? [term, ...tags] : tags;
+  const combinedTags = term ? [term] : [];
 
   gamesList.push({
     slug,
