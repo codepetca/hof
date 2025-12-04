@@ -149,44 +149,21 @@ function createTitlePlaceholder(destDir, slug, title, year) {
 }
 
 async function captureSnapshot(destDir, slug, title) {
-  let chromium;
-  try {
-    ({ chromium } = require("playwright"));
-  } catch (err) {
-    console.warn("⚠️  Playwright not available; skipping auto-snapshot.");
-    return null;
-  }
-
-  const outPath = path.join(destDir, "snapshot.png");
-  const fileUrl = `file://${path.join(destDir, "index.html")}`;
-  const browser = await chromium.launch({ headless: true });
-  const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
-  try {
-    await page.goto(fileUrl, { waitUntil: "domcontentloaded", timeout: 3000 });
-    await page.waitForSelector("canvas", { timeout: 5000 });
-    // Wait until something has drawn to the canvas (alpha > 0) or timeout.
-    await page
-      .waitForFunction(() => {
-        const c = document.querySelector("canvas");
-        if (!c) return false;
-        const ctx = c.getContext("2d");
-        if (!ctx) return false;
-        const pixel = ctx.getImageData(0, 0, 1, 1).data;
-        return pixel[3] !== 0;
-      }, { timeout: 6000 })
-      .catch(() => {});
-    await page.waitForTimeout(1000);
-    await fs.promises.mkdir(path.dirname(outPath), { recursive: true });
-    const target = page.locator("#game").first();
-    await target.screenshot({ path: outPath });
-    console.log(`📸 Captured snapshot for ${slug} (${title})`);
-    return `/games/${slug}/snapshot.png`;
-  } catch (err) {
-    console.warn(`⚠️  Snapshot capture failed for ${slug}: ${err.message}`);
-    return null;
-  } finally {
-    await browser.close();
-  }
+  const safeTitle = escapeForSvg(title || slug);
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="${safeTitle}">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0b1224"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <text x="50%" y="52%" dominant-baseline="middle" text-anchor="middle" fill="#e2e8f0" font-family="Space Grotesk, 'Inter', system-ui, sans-serif" font-size="36" font-weight="700" letter-spacing="0.5">${safeTitle}</text>
+</svg>`;
+  const outPath = path.join(destDir, "snapshot.svg");
+  fs.writeFileSync(outPath, svg, "utf8");
+  return `/games/${slug}/snapshot.svg`;
 }
 
 function makeHtmlShell(title) {
